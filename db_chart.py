@@ -87,9 +87,12 @@ def sendImage(photoname):
 
 def draw_grow(xs, ys, grows, labels, title):
     ncols = 3
+    nrows = 1
     if len(xs) <3:
         ncols = len(xs)
-    fig, axes = plt.subplots(nrows=int(len(ys)/3), ncols=3, sharex=True)
+    if len(ys)>3:
+        nrows = int(len(ys)/3)
+    fig, axes = plt.subplots(nrows=nrows, ncols=ncols, sharex=True)
     plt.subplots_adjust(left=None, bottom=None, right=None, top=3, wspace=None, hspace=None)
         
     for ax, x, y, grow, label in zip(axes.flat, xs, ys, grows, labels):
@@ -104,7 +107,10 @@ def draw_grow(xs, ys, grows, labels, title):
     fig.legend(loc="upper left")
     
     # define y position of suptitle to be ~20% of a row above the top row
-    y_title_pos = axes[0][0].get_position().get_points()[1][1]+(1/int(len(ys)/3))*0.5
+    if nrows>=3:
+        y_title_pos = axes[0][0].get_position().get_points()[1][1]+(1/nrows)*0.5
+    else:
+        y_title_pos = axes[0].get_position().get_points()[1][1]+(1/nrows)*0.1
     fig.suptitle(title, y=y_title_pos, fontsize=14)
     
 def draw_sum(x,y,grow,label, title):
