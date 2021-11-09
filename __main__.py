@@ -1,4 +1,4 @@
-from .db_chart import *
+from db_chart import *
 
 import shutil
 import datetime
